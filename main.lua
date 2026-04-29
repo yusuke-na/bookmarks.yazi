@@ -279,7 +279,7 @@ return {
 				if _is_custom_desc_input_enabled() then
 					local value, event = ya.input {
 						title = "Save with custom description:",
-						position = { "top-center", y = 3, w = 60 },
+						pos = { "top-center", y = 3, w = 60 },
 						value = tostring(_get_bookmark_file().url),
 					}
 					if event ~= 1 then
