@@ -62,8 +62,8 @@ local _get_state_path = function()
     if appdata then
         return appdata .. "\\yazi\\config\\bookmarks_data.json"
     end
-    -- Fallback to home directory if APPDATA is not set (e.g., on Unix-like systems)
-    return "~/.config/yazi/bookmarks_data.json"
+    local home = os.getenv("HOME") or "~"
+    return home .. "/.config/yazi/bookmarks_data.json"
 end
 
 
