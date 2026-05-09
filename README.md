@@ -23,10 +23,12 @@ ya pkg add dedukun/bookmarks
 
 ## Import/Export bookmarks
 
-This plugin uses [Yazi's DDS](https://yazi-rs.github.io/docs/dds/) for bookmark persistence, as such,
-the bookmarks are saved in DDS's state file (`~/.local/state/yazi/.dds` on Linux and `C:\Users\USERNAME\AppData\Roaming\yazi\state\.dds` on Windows)
+Bookmarks are saved as a JSON file at the following location:
 
-**_NOTE:_** This system may be used by other plugins that you have installed, so this file might have more data than just the bookmarks.
+- **Linux/macOS:** `~/.config/yazi/bookmarks_data.json`
+- **Windows:** `%APPDATA%\yazi\config\bookmarks_data.json`
+
+The file can be freely copied, backed up, or transferred between machines.
 
 ## Configuration
 

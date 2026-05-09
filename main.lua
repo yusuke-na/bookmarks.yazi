@@ -56,39 +56,63 @@ local _generate_description = ya.sync(function(state, file)
 	return tostring(file.url)
 end)
 
+-- Helper function to get the path for storing bookmarks data
+local _get_state_path = function()
+    local appdata = os.getenv("APPDATA")
+    if appdata then
+        return appdata .. "\\yazi\\config\\bookmarks_data.json"
+    end
+    local home = os.getenv("HOME") or "~"
+    return home .. "/.config/yazi/bookmarks_data.json"
+end
+
+
 local _load_state = ya.sync(function(state)
-	ps.sub_remote("@bookmarks", function(body)
-		if not state.bookmarks and body then
-			state.bookmarks = {}
-			for _, value in pairs(body) do
-				table.insert(state.bookmarks, value)
-			end
-		end
-	end)
+    local path = _get_state_path()
+    local f = io.open(path, "r")
+    if f then
+        local content = f:read("*all")
+        f:close()
+        -- JSON Decoding
+        local ok, data = pcall(ya.json_decode, content)
+        if ok and data then
+            state.bookmarks = data
+            return
+        end
+    end
+    state.bookmarks = {}
 end)
+
 
 local _save_state = ya.sync(function(state, bookmarks)
-	if not bookmarks then
-		ps.pub_to(0, "@bookmarks", nil)
-		return
-	end
+    local path = _get_state_path()
+    
+    local save_data = {}
+    if state.persist == "all" then
+        save_data = bookmarks
+    else
+        local idx = 1
+        for _, value in pairs(bookmarks) do
+            if string.match(value.on, "%u") then
+                save_data[idx] = value
+                idx = idx + 1
+            end
+        end
+    end
 
-	local save_state = {}
-	if state.persist == "all" then
-		save_state = bookmarks
-	else -- VIM mode
-		local idx = 1
-		for _, value in pairs(bookmarks) do
-			-- Only save bookmarks in upper case keys
-			if string.match(value.on, "%u") then
-				save_state[idx] = value
-				idx = idx + 1
-			end
-		end
-	end
-
-	ps.pub_to(0, "@bookmarks", save_state)
+    -- Write to file
+    local f = io.open(path, "w")
+    if f then
+        local ok, content = pcall(ya.json_encode, save_data)
+        if ok then
+            f:write(content)
+        end
+        f:close()
+    else
+        ya.err("Bookmarks: Failed to open file for writing at " .. path)
+    end
 end)
+
 
 local _load_last = ya.sync(function(state)
 	ps.sub_remote("@bookmarks-last", function(body)
