@@ -1,8 +1,8 @@
 # bookmarks.yazi
 
-A [Yazi](https://github.com/sxyazi/yazi) plugin that adds the basic functionality of [vi-like marks](https://neovim.io/doc/user/motion.html#mark-motions).
+A [Yazi](https://github.com/sxyazi/yazi) plugin that adds the basic functionality of [vi-like marks](https://neovim.io/doc/user/motion.html#mark-motions).  
 
-https://github.com/dedukun/bookmarks.yazi/assets/25795432/9a9fe345-dd06-442e-99f1-8475ab22fad5
+https://github.com/dedukun/bookmarks.yazi/assets/25795432/9a9fe345-dd06-442e-99f1-8475ab22fad5  
 
 ## Requirements
 
@@ -18,7 +18,7 @@ https://github.com/dedukun/bookmarks.yazi/assets/25795432/9a9fe345-dd06-442e-99f
 ## Installation
 
 ```sh
-ya pkg add dedukun/bookmarks
+ya pkg add yusuke-na/bookmarks
 ```
 
 ## Import/Export bookmarks
@@ -28,7 +28,7 @@ Bookmarks are saved as a JSON file at the following location:
 - **Linux/macOS:** `~/.config/yazi/bookmarks_data.json`
 - **Windows:** `%APPDATA%\yazi\config\bookmarks_data.json`
 
-The file can be freely copied, backed up, or transferred between machines.
+The file can be freely copied, backed up, or transferred between machines.  
 
 ## Configuration
 
