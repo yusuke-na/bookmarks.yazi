@@ -301,11 +301,18 @@ return {
 			local key = ya.which { cands = SUPPORTED_KEYS, silent = not _is_show_keys_enabled() }
 			if key then
 				if _is_custom_desc_input_enabled() then
+					local file = _get_bookmark_file()
+					local url = file.url
+					local default_desc
+					if file.is_parent then
+						default_desc = url.name
+					else
+						default_desc = (url.parent and url.parent.name) or url.name
+					end
 					local value, event = ya.input {
 						title = "Save with custom description:",
 						pos = { "top-center", y = 3, w = 60 },
-						-- value = tostring(_get_bookmark_file().url),
-						value = tostring(_get_bookmark_file().url.parent.name or _get_bookmark_file().url.name),
+						value = tostring(default_desc),
 					}
 					if event ~= 1 then
 						return
