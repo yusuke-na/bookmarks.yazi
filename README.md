@@ -6,7 +6,7 @@ https://github.com/dedukun/bookmarks.yazi/assets/25795432/9a9fe345-dd06-442e-99f
 
 ## Requirements
 
-- [Yazi](https://github.com/sxyazi/yazi) v25.4.8+
+- [Yazi](https://github.com/sxyazi/yazi) **v25.5.28+** (required for the [`ya.emit()`](https://github.com/sxyazi/yazi/pull/2653) API used when jumping to bookmarks)
 
 ## Features
 
@@ -35,7 +35,6 @@ The file can be freely copied, backed up, or transferred between machines.
 Add this to your `keymap.toml`:
 
 ```toml
-# If your yazi version is lower than v25.5.28, repleace "mgr" by "manager".
 [[mgr.prepend_keymap]]
 on = [ "m" ]
 run = "plugin bookmarks save"
@@ -147,7 +146,10 @@ For the `new` and `delete` messages, the `<key>` and `<folder>` keywords can be 
 
 When enabled, user can change description for new bookmark before it is saved.
 
-By default the custom description input is filled with path.
+By default the custom description input is pre-filled as follows:
+
+- **Hovered file** (`file_pick_mode = "hover"`): parent directory name (falls back to the file name if no parent exists)
+- **Current directory** (`file_pick_mode = "parent"` or no hovered file): current directory name
 
 ### `show_keys`
 
