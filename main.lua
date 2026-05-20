@@ -304,7 +304,8 @@ return {
 					local value, event = ya.input {
 						title = "Save with custom description:",
 						pos = { "top-center", y = 3, w = 60 },
-						value = tostring(_get_bookmark_file().url),
+						-- value = tostring(_get_bookmark_file().url),
+						value = tostring(_get_bookmark_file().url.parent.name or _get_bookmark_file().url.name),
 					}
 					if event ~= 1 then
 						return
@@ -334,9 +335,9 @@ return {
 			end
 
 			if bookmarks[selected].is_parent then
-				ya.mgr_emit("cd", { bookmarks[selected].path })
+				ya.emit("cd", { bookmarks[selected].path })
 			else
-				ya.mgr_emit("reveal", { bookmarks[selected].path })
+				ya.emit("reveal", { bookmarks[selected].path })
 			end
 		elseif action == "delete" then
 			delete_bookmark(selected)
